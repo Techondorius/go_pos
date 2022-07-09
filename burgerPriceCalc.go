@@ -10,5 +10,5 @@ func main() {
 }
 
 type burger struct {
-	price int
+	price string
 }
