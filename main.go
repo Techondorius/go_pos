@@ -1,6 +1,7 @@
-package main
+package mainm
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,4 +14,11 @@ func main() {
 	})
 
 	r.Run()
+
+	a := burger{100}
+	fmt.Println(a)
+}
+
+type burger struct {
+	price int
 }
