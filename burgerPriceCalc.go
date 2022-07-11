@@ -5,12 +5,35 @@ import (
 )
 
 func main() {
-	a := burger{100}
-	fmt.Println(a)
+	s := item{
+		itemID: 2,
+		itemName: "potatoL",
+	}
+	b := item{
+		itemID: 1,
+		itemName: "DCB",
+		grill: []string{
+			"ADD ｹﾁｬｯﾌﾟ",
+			"LIGHT ﾏｽﾀｰﾄﾞ",
+		},
+		itemChild: []*item{
+			&s,
+		},
+	}
+
+	fmt.Println(b)
+	for i := 0; i < len(b.itemChild); i ++{
+		fmt.Println(*b.itemChild[i])
+	}
+
+	fmt.Println(s)
 }
 
-type burger struct {
-	price string
+type item struct {
+	itemID int
+	itemName string
+	grill []string
+	itemChild []*item
 }
 /*
 
