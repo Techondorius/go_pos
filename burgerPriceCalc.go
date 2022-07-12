@@ -1,37 +1,21 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 )
 
 func main() {
-	s := item{
-		itemID: 2,
-		itemName: "potatoL",
-	}
-
-	d := item{
-		itemID: 3,
-		itemName: "colaL",
-	}
-
-	b := item{
-		itemID: 1,
-		itemName: "DCB",
-		price: 390,
-		grill: []string{
-			"ADD ｹﾁｬｯﾌﾟ",
-			"LIGHT ﾏｽﾀｰﾄﾞ",
-		},
-		itemChild: []*item{
-			&s, &d,
+	r := request_body{
+		ItemID: 1001,
+		ItemChildren: []request_body{
+			{ItemID: 1002},
+			{ItemID: 1003},
 		},
 	}
 
-	fmt.Println(b)
-	for i := 0; i < len(b.itemChild); i ++{
-		fmt.Println(*b.itemChild[i])
-	}
+	jsonInput , _ := json.Marshal(&r)
+	fmt.Println(string(jsonInput))
 }
 
 type item struct {
@@ -43,7 +27,7 @@ type item struct {
 }
 
 type request_body struct {
-	itemID int
-	grills []string
-	itemChildren []any
+	ItemID int `json:"itemID"`
+	Grills []string `json:"grills,omitempty"`
+	ItemChildren []request_body `json:"itemChildren,omitempty"`
 }
