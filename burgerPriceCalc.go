@@ -9,15 +9,22 @@ func main() {
 		itemID: 2,
 		itemName: "potatoL",
 	}
+
+	d := item{
+		itemID: 3,
+		itemName: "colaL",
+	}
+
 	b := item{
 		itemID: 1,
 		itemName: "DCB",
+		price: 390,
 		grill: []string{
 			"ADD ｹﾁｬｯﾌﾟ",
 			"LIGHT ﾏｽﾀｰﾄﾞ",
 		},
 		itemChild: []*item{
-			&s,
+			&s, &d,
 		},
 	}
 
@@ -25,45 +32,18 @@ func main() {
 	for i := 0; i < len(b.itemChild); i ++{
 		fmt.Println(*b.itemChild[i])
 	}
-
-	fmt.Println(s)
 }
 
 type item struct {
 	itemID int
 	itemName string
+	price int
 	grill []string
 	itemChild []*item
 }
-/*
 
-{
-	responceDatas: blablabla
-	items: [
-		{
-			name: "ﾀﾞﾌﾞﾙﾁｰｽﾞﾊﾞｰｶﾞｰ"
-			Price: 390
-			Grills: [
-				"ADD ｹﾁｬｯﾌﾟ",
-				"LIGHT ﾏｽﾀｰﾄﾞ"
-			]
-			items: [
-				{
-					Name: "ﾎﾟﾃﾄL"
-					Grills:[
-						"LIGHT ｼｵ"
-					]
-				},
-				{
-					Name: "ｺｰﾗL"
-					Grills: [
-						"NO ｺｵﾘ"
-					]
-				}
-			]
-		}
-	]
+type request_body struct {
+	itemID int
+	grills []string
+	itemChildren []any
 }
-これを落とし込む
-
- */
