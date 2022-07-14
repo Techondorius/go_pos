@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"go_pos/controller"
 )
 
 func main() {
@@ -12,6 +13,11 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "good"})
 	})
+
+	price := r.Group("/api/price")
+	{
+		price.GET("/", controller.GetPrice)
+	}
 
 	r.Run()
 

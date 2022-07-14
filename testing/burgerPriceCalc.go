@@ -20,17 +20,18 @@ func main() {
 	}
 
 	jsonInput , _ := json.Marshal(&r)
-	fmt.Println(string(jsonInput))
+	fmt.Println("requestBody(Converted json to string): " + string(jsonInput))
 
 	var decodedInput []request_body
 	json.Unmarshal([]byte(jsonInput), &decodedInput)
+	fmt.Print("requestbody converted to Struct: ")
 	fmt.Println(decodedInput)
 }
 
-func setCheck(slice []request_body){
-	for i := 0; i < len(slice); i++ {
-		if slice[i].ItemChildren != nil{
-			setCheck(slice[i].ItemChildren)
+func setCheck(r []request_body){
+	for i := 0; i < len(r); i++ {
+		if r[i].ItemChildren != nil{
+			setCheck(r[i].ItemChildren)
 		} else {
 
 		}
@@ -41,7 +42,8 @@ type item struct {
 	itemID int
 	itemName string
 	price int
-	grill []string
+	grill_free []string
+	grill_paid []item
 	itemChild []item
 }
 

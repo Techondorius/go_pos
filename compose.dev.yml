@@ -21,6 +21,10 @@ services:
     image: mysql:8.0.15
     # volumes:
     #   - ./tmp/mysql:/var/lib/mysql
+    tmpfs:
+      - /var/lib/mysql
+    ports:
+      - "3306:3306"
     environment:
       TZ: Asia/Tokyo
       MYSQL_DATABASE: gin_app
