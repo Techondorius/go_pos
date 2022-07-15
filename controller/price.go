@@ -39,7 +39,7 @@ func (r Requests) PriceCalc() int{
 
 }
 
-// Itemsの合計金額を計算する
+// Itemsの合計金額を計算する！
 func (s Items) CalcPrice() int {
 	return 0
 }
