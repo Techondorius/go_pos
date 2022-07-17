@@ -42,8 +42,9 @@ func (r Requests) PriceCalc() int{
 // 各アイテムの詳細を取得(RequestsをItemsに変換)
 func (r Requests) ItemDetail() Items {
 	item_list := map[int]Items{
-		1001: Items{
+		1001: Items{{
 			ItemID: 1001,
+			},
 		},
 	}
 	res := Items{}
