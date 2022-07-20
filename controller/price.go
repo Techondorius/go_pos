@@ -39,13 +39,14 @@ func (r Requests) PriceCalc() int{
 
 }
 
-// Itemsの合計金額を計算する
-func (s Items) CalcPrice() int {
-	return 0
-}
-
 // 各アイテムの詳細を取得(RequestsをItemsに変換)
 func (r Requests) ItemDetail() Items {
+	// item_list := map[int]Items{
+	// 	1001: Items{{
+	// 		ItemID: 1001,
+	// 		},
+	// 	},
+	// }
 	res := Items{}
 	return res
 }
@@ -53,6 +54,11 @@ func (r Requests) ItemDetail() Items {
 // ItemChildrenに入るべきでないものが入っていないか確認
 func (it Items) CheckStructure() error {
 	return nil
+}
+
+// Itemsの合計金額を計算する！
+func (s Items) CalcPrice() int {
+	return 0
 }
 
 // Requestsの最終到達点
