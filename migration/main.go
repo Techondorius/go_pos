@@ -10,9 +10,9 @@ func main(){
 
 	db := model.Connection()
 
-	db.AutoMigrate(&model.GrillPossible{})
 	db.AutoMigrate(&model.ItemMaster{})
 	db.AutoMigrate(&model.GrillMaster{})
+	db.AutoMigrate(&model.GrillPossible{})
 
 	log.Println("Migration finished")
 
