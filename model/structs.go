@@ -1,13 +1,10 @@
 package model
 
-// import "gorm.io/gorm"
-
 type ItemMaster struct {
 	ID int `gorm:"primaryKey"`
 	Name string `gorm:"not null"`
-	BigCategory string `gorm:"not null"`
-	SmallCategory string `gorm:"not null"`
 	Grills []GrillPossible `gorm:"foreignKey:ItemID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	Children []ItemMaster `gorm:"-:all"`
 }
 
 type GrillPossible struct{

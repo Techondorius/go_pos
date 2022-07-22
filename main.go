@@ -17,6 +17,8 @@ func main() {
 	price := r.Group("/api/price")
 	{
 		price.GET("/", controller.GetPrice)
+		price.GET("/testdata", controller.InsertTestData)
+
 	}
 
 	r.Run()

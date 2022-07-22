@@ -1,8 +1,9 @@
 package controller
 
 import (
-	"net/http"
+	"go_pos/model"
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +15,26 @@ type Requests []struct {
 	ItemChildren Requests `json:"itemChildren,omitempty"`
 }
 
+type Masters [](model.ItemMaster)
+
+func InsertTestData(c *gin.Context) {
+	im := []model.ItemMaster{
+		{
+			ID: 1001,
+			Name: "DCB",
+		},{
+			ID: 1002,
+			Name: "ﾎﾟﾃﾄM",
+		},{
+			ID: 1003,
+			Name: "ｺｰﾗM",
+		},
+	}
+	if err := model.CreateItemMaster(im); err != nil {
+		log.Println(err)
+	}
+}
+
 func GetPrice(c *gin.Context) {
 	var r Requests
 	if err := c.ShouldBindJSON(&r); err != nil {
@@ -21,17 +42,19 @@ func GetPrice(c *gin.Context) {
 		log.Println(err)
 		return
 	} else {
-		res := r.CheckQW(0)
-		c.JSON(200, res)
-		log.Println(r)
-		log.Println(res)
+		// res := r.CheckQW(0)
+		// c.JSON(200, res)
+		// log.Println(r)
+		// log.Println(res)
 	}
 
+	r.PriceCalc()
 }
 
 // 合計金額を計算するメイン
-func (r Requests) PriceCalc() int{
+func (r *Requests) PriceCalc() int{
 	s := r.ItemDetail()
+	log.Println(s)
 	if err := s.CheckStructure(); err != nil {
 		log.Println(err)
 	}
@@ -40,35 +63,41 @@ func (r Requests) PriceCalc() int{
 }
 
 // 各アイテムの詳細を取得(RequestsをItemsに変換)
-func (r Requests) ItemDetail() Items {
-	// item_list := map[int]Items{
-	// 	1001: Items{{
-	// 		ItemID: 1001,
-	// 		},
-	// 	},
-	// }
-	res := Items{}
-	return res
+func (r Requests) ItemDetail() Masters {
+	var ret Masters
+	for i := 0; i < len(r); i++ {
+		id := r[i].ItemID
+		ic := r[i].ItemChildren
+		if ic != nil {
+			ms, err := model.ReadItemMasterByID(id)
+			if err != nil{
+				log.Println(err)
+			}
+			ms.Children = ic.ItemDetail()
+			ret = append(ret, ms)
+		} else {
+			k, err := model.ReadItemMasterByID(id)
+			if err != nil{
+				log.Println(err)
+			}
+			ret = append(ret, k)
+		}
+	}
+	return ret
 }
 
 // ItemChildrenに入るべきでないものが入っていないか確認
-func (it Items) CheckStructure() error {
+func (it *Masters) CheckStructure() error {
 	return nil
 }
 
 // Itemsの合計金額を計算する！
-func (s Items) CalcPrice() int {
+func (s Masters) CalcPrice() int {
 	return 0
 }
 
 // Requestsの最終到達点
-type Items []struct{
-	ItemID int
-	ItemName string
-	GrillsPaid []Items
-	GrillsFree []string
-	ItemChildren Items
-}
+type Items [](model.ItemMaster)
 
 // Requestのなかのアイテム数をカウント
 func (r Requests) CheckQW(num int) int {
