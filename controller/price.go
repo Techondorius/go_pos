@@ -17,6 +17,8 @@ type Requests []struct {
 
 type Masters [](model.ItemMaster)
 
+// GET /api/price/testddata
+// SQLにTestDataを挿れる
 func InsertTestData(c *gin.Context) {
 	im := []model.ItemMaster{
 		{
@@ -28,6 +30,9 @@ func InsertTestData(c *gin.Context) {
 		},{
 			ID: 1003,
 			Name: "ｺｰﾗM",
+		},{
+			ID: 1004,
+			Name: "ﾄﾏﾄ",
 		},
 	}
 	if err := model.CreateItemMaster(im); err != nil {
@@ -35,6 +40,7 @@ func InsertTestData(c *gin.Context) {
 	}
 }
 
+// GET /api/price/
 func GetPrice(c *gin.Context) {
 	var r Requests
 	if err := c.ShouldBindJSON(&r); err != nil {
@@ -62,7 +68,7 @@ func (r *Requests) PriceCalc() int{
 
 }
 
-// 各アイテムの詳細を取得(RequestsをItemsに変換)
+// 各アイテムの詳細を取得(RequestsをMastersに変換)
 func (r Requests) ItemDetail() Masters {
 	var ret Masters
 	for i := 0; i < len(r); i++ {
@@ -91,13 +97,10 @@ func (it *Masters) CheckStructure() error {
 	return nil
 }
 
-// Itemsの合計金額を計算する！
+// Mastersの合計金額を計算する！
 func (s Masters) CalcPrice() int {
 	return 0
 }
-
-// Requestsの最終到達点
-type Items [](model.ItemMaster)
 
 // Requestのなかのアイテム数をカウント
 func (r Requests) CheckQW(num int) int {
