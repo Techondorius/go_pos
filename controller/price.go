@@ -48,10 +48,10 @@ func GetPrice(c *gin.Context) {
 		log.Println(err)
 		return
 	} else {
-		// res := r.CheckQW(0)
-		// c.JSON(200, res)
-		// log.Println(r)
-		// log.Println(res)
+		res := r.CheckQW(0)
+		c.JSON(200, res)
+		log.Println(r)
+		log.Println(res)
 	}
 
 	r.PriceCalc()
