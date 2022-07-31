@@ -8,7 +8,7 @@ import (
 func main(){
 	log.Println("Migration started")
 
-	db := model.ConnectionByLocalhost()
+	db := model.ConnectionByTCP()
 
 	db.AutoMigrate(&model.ItemMaster{})
 	db.AutoMigrate(&model.GrillMaster{})
